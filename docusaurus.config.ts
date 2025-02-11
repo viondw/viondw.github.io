@@ -14,6 +14,8 @@ const config: Config = {
   // GitHub Pages 部署配置
   organizationName: 'viondw', // 替换为你的 GitHub 用户名或组织名
   projectName: 'viondw.github.io', // 替换为你的仓库名
+  deploymentBranch: 'gh-pages',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
