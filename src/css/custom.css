@@ -1,0 +1,30 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #6C63FF; /* 主色调：柔和的紫色 */
+  --ifm-color-primary-dark: #5a52e6; /* 深色主色调 */
+  --ifm-color-primary-darker: #4a43cc; /* 更深的主色调 */
+  --ifm-color-primary-darkest: #3a34b3; /* 最深的主色调 */
+  --ifm-color-primary-light: #7d75ff; /* 浅色主色调 */
+  --ifm-color-primary-lighter: #8e87ff; /* 更浅的主色调 */
+  --ifm-color-primary-lightest: #9f99ff; /* 最浅的主色调 */
+  --ifm-code-font-size: 95%; /* 代码字体大小 */
+  --docusaurus-highlighted-code-line-bg: rgba(108, 99, 255, 0.1); /* 高亮代码行背景色 */
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #6C63FF; /* 主色调：柔和的紫色 */
+  --ifm-color-primary-dark: #5a52e6; /* 深色主色调 */
+  --ifm-color-primary-darker: #4a43cc; /* 更深的主色调 */
+  --ifm-color-primary-darkest: #3a34b3; /* 最深的主色调 */
+  --ifm-color-primary-light: #7d75ff; /* 浅色主色调 */
+  --ifm-color-primary-lighter: #8e87ff; /* 更浅的主色调 */
+  --ifm-color-primary-lightest: #9f99ff; /* 最浅的主色调 */
+  --docusaurus-highlighted-code-line-bg: rgba(108, 99, 255, 0.2); /* 高亮代码行背景色 */
+}
