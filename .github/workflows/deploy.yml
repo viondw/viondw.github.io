@@ -9,7 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -41,7 +42,7 @@ jobs:
         with:
           branch: gh-pages
           folder: build
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT }}  # 使用你的 PAT
           repository-name: ${{ github.repository }}
           clean: true
           single-commit: true
