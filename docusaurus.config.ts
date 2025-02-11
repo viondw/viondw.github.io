@@ -14,8 +14,6 @@ const config: Config = {
   // GitHub Pages 部署配置
   organizationName: 'viondw', // 替换为你的 GitHub 用户名或组织名
   projectName: 'viondw.github.io', // 替换为你的仓库名
-  deploymentBranch: 'gh-pages',
-  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -66,51 +64,6 @@ const config: Config = {
           position: 'right',
         },
       ],
-    },
-    footer: {
-      style: 'dark',
-      links: [
-        {
-          title: '文档',
-          items: [
-            {
-              label: '快速开始',
-              to: '/docs/getting-started',
-            },
-            {
-              label: 'API 参考',
-              to: '/docs/api-reference',
-            },
-          ],
-        },
-        {
-          title: '社区',
-          items: [
-            {
-              label: '问题反馈',
-              href: 'https://github.com/biliup/biliup/issues',
-            },
-            {
-              label: 'QQ 交流群',
-              href: 'https://qm.qq.com/...', // 替换为实际群链接
-            },
-          ],
-        },
-        {
-          title: '更多资源',
-          items: [
-            {
-              label: '更新日志',
-              to: '/blog',
-            },
-            {
-              label: '贡献指南',
-              href: 'https://github.com/biliup/biliup/blob/main/CONTRIBUTING.md',
-            },
-          ],
-        },
-      ],
-      copyright: `Copyright © ${new Date().getFullYear()} BiliUP Contributors `,
     },
     prism: {
       theme: prismThemes.github,
