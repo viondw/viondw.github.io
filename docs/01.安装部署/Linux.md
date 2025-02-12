@@ -46,7 +46,7 @@ pip3 uninstall biliup
 ```
 ## 一键脚本安装
 - 该脚本由[biliup社区](https://biliup.me)提供。
-- 确保已安装wget.
+- 确保已安装wget,curl`sudo apt install wget curl -y`
 
 ```
 wget -O install.sh https://image.biliup.me/install.sh && chmod +x install.sh && bash install.sh
