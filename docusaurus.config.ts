@@ -8,7 +8,7 @@ const config: Config = {
   favicon: 'img/tubiao.png',
 
   // 生产环境 URL
-  url: 'https://viondw.github.io',
+  url: 'https://docs.biliup.me',
   baseUrl: '/',
 
   // GitHub Pages 部署配置
