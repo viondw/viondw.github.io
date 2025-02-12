@@ -17,11 +17,11 @@
 - 方法一：使用**winget**(推荐)
 使用管理员身份运行cmd，然后输入`winget install BtbN.FFmpeg.GPL` 
 - 方法二：官方预编译二进制
-①访问 [FFmpeg仓库release页面](https://github.com/BtbN/FFmpeg-Builds/releases) 
-②下载ffmpeg-master-latest-win64-gpl.zip并解压。
+①访问 [FFmpeg仓库release页面](https://github.com/BtbN/FFmpeg-Builds/releases)<br /> 
+②下载ffmpeg-master-latest-win64-gpl.zip并解压。<br />
 ③配置环境变量：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将bin文件夹路径（如D:\ffmpeg\bin）添加到系统PATH。
 ### macOS
-- 使用Homebrew（推荐）
+- 使用Homebrew（推荐）<br />
 ① 安装Homebrew（如未安装）：
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
