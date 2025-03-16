@@ -1,35 +1,61 @@
-name: Deploy Docs
+# .github/workflows/deploy.yml
+name: Deploy VitePress to GitHub Pages
 
 on:
   push:
-    branches: [main] # 触发分支
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Node
+        with:
+          fetch-depth: 0  # 保留完整提交历史（用于lastUpdated功能）[2,6](@ref)
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9  # 指定pnpm版本[6](@ref)
+          
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Docs
-        run: npm run docs:build
-
-      - name: Create .nojekyll
-        run: |
-          mkdir -p docs/.vitepress/dist
-          touch docs/.vitepress/dist/.nojekyll
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+          cache: pnpm  # 启用pnpm缓存加速构建[2](@ref)
+          
+      - name: Configure Pages
+        uses: actions/configure-pages@v4  # 新版Pages配置方式[2](@ref)
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile  # 确保依赖版本一致[6](@ref)
+          
+      - name: Build project
+        run: pnpm docs:build  # 执行VitePress构建命令[6](@ref)
+          
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/.vitepress/dist
+          path: .vitepress/dist  # 确认构建输出目录[2,6](@ref)
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4  # 官方推荐的最新部署方式[2,6](@ref)
