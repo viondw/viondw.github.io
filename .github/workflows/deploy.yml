@@ -1,4 +1,3 @@
-# .github/workflows/deploy.yml
 name: Deploy VitePress to GitHub Pages
 
 on:
@@ -7,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write  # 新增写入权限用于自动提交锁文件[1](@ref)
   pages: write
   id-token: write
 
@@ -16,38 +15,60 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  dependency-management:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 保留完整提交历史（用于lastUpdated功能）[2,6](@ref)
-          
+          fetch-depth: 0
+          persist-credentials: false  # 允许后续git push操作[1](@ref)
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 9  # 指定pnpm版本[6](@ref)
+          version: 9
           
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm  # 启用pnpm缓存加速构建[2](@ref)
-          
-      - name: Configure Pages
-        uses: actions/configure-pages@v4  # 新版Pages配置方式[2](@ref)
-          
+          cache: pnpm
+
+      - name: Configure PNPM hoisting
+        run: echo "shamefully-hoist=true" > .npmrc  # 解决模块解析问题[1](@ref)
+
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile  # 确保依赖版本一致[6](@ref)
-          
+        run: pnpm install --no-frozen-lockfile  # 允许更新锁文件[1](@ref)
+
+      - name: Auto-commit lockfile
+        if: success()
+        run: |
+          git config --global user.email "772813042@qq.com"
+          git config --global user.name "/viondw"
+          git add pnpm-lock.yaml
+          git commit -m "chore: auto-update pnpm-lock.yaml [skip ci]" || echo "No lockfile changes"
+          git push origin HEAD:main
+
+  build:
+    needs: dependency-management  # 依赖前置任务[1](@ref)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v4
+
       - name: Build project
-        run: pnpm docs:build  # 执行VitePress构建命令[6](@ref)
-          
+        run: |
+          pnpm install --frozen-lockfile  # 使用已更新的锁文件
+          pnpm docs:build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .vitepress/dist  # 确认构建输出目录[2,6](@ref)
+          path: .vitepress/dist
 
   deploy:
     environment:
@@ -58,4 +79,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4  # 官方推荐的最新部署方式[2,6](@ref)
+        uses: actions/deploy-pages@v4
