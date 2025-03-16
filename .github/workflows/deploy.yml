@@ -71,7 +71,6 @@ jobs:
         with:
           ref: main
 
-      # 关键修复部分开始（基于搜索结果[2,6](@ref)优化）
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
@@ -86,14 +85,14 @@ jobs:
 
       - name: Patch VitePress config
         run: |
-          # 动态生成配置文件补丁
-          echo "export default {
+          echo "import { defineConfig } from 'vitepress';
+          export default defineConfig({
             vite: {
               build: {
                 rollupOptions: {
                   external: [],
                   output: {
-                    manualChunks: (id) => {
+                    manualChunks: (id: string) => {
                       if (id.includes('@fancyapps/ui')) return undefined;
                       if (id.includes('node_modules')) return 'vendor';
                     }
@@ -101,17 +100,15 @@ jobs:
                 }
               }
             }
-          }" > docs/.vitepress/patch.js
+          })" > docs/.vitepress/patch.mts
           
-          # 修改主配置文件
-          sed -i "1i import patchConfig from './patch';" docs/.vitepress/config.js
-          sed -i "/export default/ s/}$/ Object.assign({}, patchConfig)/" docs/.vitepress/config.js
+          sed -i "1i import patchConfig from './patch.mts';" docs/.vitepress/config.mts
+          sed -i "/export default defineConfig/ s/});/}, patchConfig);/" docs/.vitepress/config.mts
 
       - name: Force rebuild dependencies
         run: |
           pnpm update vite@latest vitepress@latest @fancyapps/ui@latest
           pnpm exec vitepress clean
-      # 关键修复部分结束
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
