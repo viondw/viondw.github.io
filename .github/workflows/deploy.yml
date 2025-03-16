@@ -8,9 +8,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # 关键：显式声明权限
+    permissions:
+      contents: write  # 允许写入仓库（推送 gh-pages）
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 拉取完整提交历史（某些部署需要）
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -20,16 +26,16 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8.x  # 指定 pnpm 版本
+          version: 8.x
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Build
-        run: pnpm docs:build  # 关键修改：使用 docs:build
+        run: pnpm docs:build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/.vitepress/dist  # VitePress 默认输出目录
+          # 不再需要显式传递 github_token（自动使用 GITHUB_TOKEN）
+          publish_dir: docs/.vitepress/dist
