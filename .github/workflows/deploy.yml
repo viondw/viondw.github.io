@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # 必须为write
+  contents: write
   pages: write
   id-token: write
 
@@ -22,20 +22,27 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: true  # 关键修改
+          persist-credentials: true
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 9
-          
+          store-dir: ~/.pnpm-store
+
+      - name: Cache PNPM store
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: pnpm
 
-      - name: Configure PNPM hoisting
+      - name: Configure hoisting
         run: echo "shamefully-hoist=true" > .npmrc
 
       - name: Install dependencies
@@ -44,14 +51,16 @@ jobs:
       - name: Auto-commit lockfile
         if: success()
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}  # 使用PAT
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.email "531035580@52moyu.net"
           git config --global user.name "MoYu Bot"
           git remote set-url origin https://x-access-token:$GH_PAT@github.com/${{ github.repository }}
-          git add pnpm-lock.yaml
-          git commit -m "chore: auto-update pnpm-lock.yaml [skip ci]" || echo "No changes"
-          git push origin HEAD:main
+          git diff --exit-code pnpm-lock.yaml || (
+            git add pnpm-lock.yaml
+            git commit -m "chore: auto-update pnpm-lock.yaml [skip ci]"
+            git push origin HEAD:main
+          )
 
   build:
     needs: dependency-management
@@ -59,14 +68,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
 
-      - name: Build project
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm docs:build
+      - name: Frozen install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build VitePress
+        run: pnpm docs:build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+
+      - name: Validate build output
+        run: test -d .vitepress/dist || (echo "Build failed"; exit 1)
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
