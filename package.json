@@ -15,7 +15,7 @@
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
-    "@fancyapps/ui": "^5.0.0",  // 新增的依赖
+    "@fancyapps/ui": "^5.0.0",
     "@types/node": "^20.11.29",
     "markdown-it-custom-attrs": "^1.0.2",
     "sass": "^1.72.0",
