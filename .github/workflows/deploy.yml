@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # 新增写入权限用于自动提交锁文件[1](@ref)
+  contents: write  # 必须为write
   pages: write
   id-token: write
 
@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: false  # 允许后续git push操作[1](@ref)
+          persist-credentials: true  # 关键修改
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
@@ -36,22 +36,25 @@ jobs:
           cache: pnpm
 
       - name: Configure PNPM hoisting
-        run: echo "shamefully-hoist=true" > .npmrc  # 解决模块解析问题[1](@ref)
+        run: echo "shamefully-hoist=true" > .npmrc
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile  # 允许更新锁文件[1](@ref)
+        run: pnpm install --no-frozen-lockfile
 
       - name: Auto-commit lockfile
         if: success()
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}  # 使用PAT
         run: |
-          git config --global user.email "772813042@qq.com"
-          git config --global user.name "/viondw"
+          git config --global user.email "531035580@52moyu.net"
+          git config --global user.name "MoYu Bot"
+          git remote set-url origin https://x-access-token:$GH_PAT@github.com/${{ github.repository }}
           git add pnpm-lock.yaml
-          git commit -m "chore: auto-update pnpm-lock.yaml [skip ci]" || echo "No lockfile changes"
+          git commit -m "chore: auto-update pnpm-lock.yaml [skip ci]" || echo "No changes"
           git push origin HEAD:main
 
   build:
-    needs: dependency-management  # 依赖前置任务[1](@ref)
+    needs: dependency-management
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -62,7 +65,7 @@ jobs:
 
       - name: Build project
         run: |
-          pnpm install --frozen-lockfile  # 使用已更新的锁文件
+          pnpm install --frozen-lockfile
           pnpm docs:build
 
       - name: Upload artifact
