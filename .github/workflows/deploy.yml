@@ -1,141 +1,27 @@
-name: Deploy VitePress to GitHub Pages
-
+name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  workflow_dispatch:
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
-  dependency-management:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: true
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-          store-dir: ~/.pnpm-store
-
-      - name: Cache PNPM store
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Configure hoisting
-        run: echo "shamefully-hoist=true" > .npmrc
-
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
-
-      - name: Auto-commit lockfile
-        if: success()
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "531035580@52moyu.net"
-          git config --global user.name "MoYu Bot"
-          git remote set-url origin https://x-access-token:$GH_PAT@github.com/${{ github.repository }}
-          git diff --exit-code pnpm-lock.yaml || (
-            git add pnpm-lock.yaml
-            git commit -m "chore: auto-update pnpm-lock.yaml [skip ci]"
-            git push origin HEAD:main
-          )
-
-  build:
-    needs: dependency-management
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: main
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-          store-dir: ~/.pnpm-store
-
-      - name: Cache PNPM store
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-
-      - name: Patch VitePress config
-        run: |
-          echo "import { defineConfig } from 'vitepress';
-          export default defineConfig({
-            vite: {
-              build: {
-                rollupOptions: {
-                  external: [],
-                  output: {
-                    manualChunks: (id: string) => {
-                      if (id.includes('@fancyapps/ui')) return undefined;
-                      if (id.includes('node_modules')) return 'vendor';
-                    }
-                  }
-                }
-              }
-            }
-          })" > docs/.vitepress/patch.mts
-          
-          sed -i "1i import patchConfig from './patch.mts';" docs/.vitepress/config.mts
-          sed -i "/export default defineConfig/ s/});/}, patchConfig);/" docs/.vitepress/config.mts
-
-      - name: Force rebuild dependencies
-        run: |
-          pnpm update vite@latest vitepress@latest @fancyapps/ui@latest
-          pnpm exec vitepress clean
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v4
-
-      - name: Frozen install
-        run: pnpm install --frozen-lockfile
-
-      - name: Build VitePress
-        run: pnpm docs:build
-        env:
-          NODE_OPTIONS: --max_old_space_size=4096
-
-      - name: Validate build output
-        run: test -d .vitepress/dist || (echo "Build failed"; exit 1)
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .vitepress/dist
-
   deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - run: npm ci
+    - run: npm run build
+    - uses: actions/configure-pages@v4
+    - uses: actions/upload-pages-artifact@v3
+      with:
+        path: docs/.vitepress/dist
+    - name: Deploy
+      id: deployment
+      uses: actions/deploy-pages@v4
