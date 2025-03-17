@@ -1,6 +1,6 @@
 # BiliuP
 <div style="display: flex; justify-content: center;">
-  <img src="/docs/public/home.png" alt="description" width="300" height="300"/>
+  <img src="/home.png" alt="description" width="300" height="300"/>
 </div>
 
 ## BiliuP 是什么?   
