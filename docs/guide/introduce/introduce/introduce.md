@@ -10,7 +10,7 @@ hero:
   text: "正在维护的项目"
   tagline: 点击分类查看项目详情
   image:
-    src: /logo.png
+    src: ./home.png
 features:
   - title: 高性能框架
     details: 核心基础设施项目
