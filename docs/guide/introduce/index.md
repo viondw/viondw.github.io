@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: doc
 title: BiliuP文档站
 hero:
   name: BiliuP文档站  
