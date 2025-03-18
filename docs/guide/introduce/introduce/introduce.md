@@ -2,6 +2,8 @@
 
 
 ---
+layout: doc
+title: 项目介绍
 layout: home
 title: BiliuP
 hero:
