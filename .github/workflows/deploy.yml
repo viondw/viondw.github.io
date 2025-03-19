@@ -21,34 +21,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # 确保拉取完整提交历史（部分插件可能需要）
 
-      # 修复点：pnpm步骤缩进对齐
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-
+      # 设置 Node.js 环境（包含 yarn 缓存）
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: "yarn"  # 关键点：启用 yarn 专属缓存加速
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      # 安装依赖（强制使用 lockfile）
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install --frozen-lockfile  # 严格模式，避免锁文件不同步
 
+      # 构建 VitePress 站点
       - name: Build with VitePress
-        run: pnpm docs:build
+        run: yarn docs:build  # 确保 package.json 中有 docs:build 脚本
 
+      # 上传构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vitepress/dist
-          retention-days: 3  # 新增存储清理配置[1](@ref)
+          path: docs/.vitepress/dist  # 假设 VitePress 输出目录为此路径
+          retention-days: 3
 
   deploy:
     environment:
