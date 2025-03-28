@@ -70,7 +70,7 @@ bilibili投稿客户端，支持Windows，Linux，macOS。
 }
 </style>   
 
-<a href="./dome.html" class="custom-link">
+<a href="./demo.html" class="custom-link">
   <span class="link-icon">📘</span> 
   <span>Q&A 常见问题 </span>
 </a>
