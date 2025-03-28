@@ -44,11 +44,35 @@ bilibili投稿客户端，支持Windows，Linux，macOS。
 [项目地址](https://github.com/biliup/biliup)
 :::   
 
-直播平台支持：   
-
+   
 <a href="./supportedLivePlatforms.html" class="custom-link">
   <span class="link-icon">📘</span> 
   <span>查看 支持的直播平台 </span>
+</a>
+
+<style>
+.custom-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--vp-c-brand-soft);
+  border-radius: 6px;
+  color: var(--vp-c-brand);
+  transition: transform 0.2s;
+}
+.custom-link:hover {
+  transform: translateY(-2px);
+  background: var(--vp-c-brand-soft-hover);
+}
+.link-icon {
+  margin-right: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+</style>   
+
+<a href="./dome.html" class="custom-link">
+  <span class="link-icon">📘</span> 
+  <span>Q&A 常见问题 </span>
 </a>
 
 <style>
