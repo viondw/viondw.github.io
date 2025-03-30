@@ -54,19 +54,80 @@ BiliuP 是一个活跃在 [GitHub](https://github.com/biliup) 的团队，专注
 
 ### 了解更多
 
-*   <a href="./supportedLivePlatforms.html" class="custom-link">
-      <span class="link-icon">📘</span>
-      <span>支持的直播平台</span>
-    </a>
-*   <a href="./demo.html" class="custom-link">
-      <span class="link-icon">❓</span>
-      <span>Q&A 常见问题</span>
-    </a>
-*   <a href="https://biliup.me" class="custom-link">
-      <span class="link-icon">💬</span>
-      <span>社区与支持</span>
-    </a>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* 父容器设置  */
+        .horizontal-nav {
+            display: flex;
+            gap: 25px;       /* 元素间距 */
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
 
+        /* 链接项样式  */
+        .custom-link {
+            display: inline-flex;
+            align-items: center;
+            min-width: 160px;    /* 最小宽度防止挤压 */
+            padding: 10px 15px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: #2d3748;
+            transition: transform 0.2s ease;
+        }
+
+        /* 图标与文字间距  */
+        .custom-link > span {
+            display: inline-block;
+            white-space: nowrap;  /* 强制不换行 (网页4) */
+        }
+        .link-icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        /* 响应式处理  */
+        @media (max-width: 768px) {
+            .horizontal-nav {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .custom-link {
+                min-width: auto;
+                flex: 1 1 45%;
+            }
+        }
+
+        /* 悬停动效 (增强交互体验) */
+        .custom-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(99,102,241,0.15);
+        }
+    </style>
+</head>
+<body>
+    <nav class="horizontal-nav">
+        <a href="./supportedLivePlatforms.html" class="custom-link">
+            <span class="link-icon">📘</span>
+            <span>支持的直播平台</span>
+        </a>
+        <a href="./demo.html" class="custom-link">
+            <span class="link-icon">❓</span>
+            <span>Q&A 常见问题</span>
+        </a>
+        <a href="https://biliup.me" class="custom-link">
+            <span class="link-icon">💬</span>
+            <span>社区与支持</span>
+        </a>
+    </nav>
+</body>
+</html>
 ---
 
 ## 快速开始
