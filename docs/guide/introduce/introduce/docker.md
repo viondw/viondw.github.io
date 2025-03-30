@@ -1,9 +1,15 @@
-### 🚧前提条件🚧
-- 在开始之前，请确保您的系统已经安装了 Docker。如果尚未安装，请参考[Docker 官方文档](https://docs.docker.com/get-started/get-docker/)进行安装。
-- 安装的默认端口为19159，请在系统防火墙/宝塔面板/1panle等面板开放对应端口，如云服务器要去对应网站开放端口。
-- 如添加webui密码，用户名为`biliup`
-- 每个容器应对应一个端口，一个端口两个容器是不允许的存在。
+# 🐳 Docker 安装与运行指南
 
+本指南将引导您使用 Docker 快速部署和运行 BiliuP。
+
+> [!IMPORTANT]
+> **前提条件**
+> *   **Docker 环境**: 确保您的系统已成功安装 Docker。如果尚未安装，请参照 [Docker 官方安装文档](https://docs.docker.com/get-started/get-docker/)。
+> *   **端口开放**: BiliuP 默认使用端口 `19159`。请确保在您的服务器防火墙、云服务商安全组、或宝塔/1Panel 等管理面板中开放此 TCP 端口。
+> *   **WebUI 凭证**: 如果您在启动时设置了密码（通过 `--password` 参数），WebUI 的默认用户名是 `biliup`。
+> *   **端口独占**: 每个 BiliuP Docker 容器都需要映射一个独立的主机端口。不允许将多个容器映射到同一个主机端口。
+
+-------
 
 ## 安装步骤
 
