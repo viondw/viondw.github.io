@@ -1,12 +1,12 @@
 
 > [!IMPORTANT]
-> **系统兼容性**
-> *   本项目主要在 **Windows 10 及更高版本** 上经过测试。在 Windows 7 或 Windows Server 等较旧系统上运行可能会遇到未知错误。
+> *   理论上是支持`macOS`系统的，但我~~没用过~~，所以等有缘人来补文档吧。
+> *   最好用`Windows server`系列来跑，来点~~微软笑话~~：8G内存够用了 一开机就被自家软件吃一半。
 
 
 ---
 
-您可以选择以下两种方式在 Windows 上使用 `biliup`：
+您可以选择以下两种方式在 Windows 上使用 `biliup`：   
 
 ## 方法一：使用 pip 安装 (与 Linux 类似)
 
@@ -14,11 +14,11 @@
 
 ---
 
-## 方法二：直接运行 .exe 文件 (推荐，无需环境)
+## 方法二：直接运行 .exe 文件 (推荐，无需环境)   
 
 `biliup` 提供了预编译的 `.exe` 文件，无需安装 Python 环境即可直接运行，方便快捷。
 
-**下载与运行:**
+**下载与运行:**   
 
 1.  访问 `biliup` 项目的 Releases 页面：[点此快速跳转](https://github.com/biliup/biliup/releases)
 2.  在最新版本的 "Assets" 部分，下载 `biliup_xxx.exe` 文件（xxx 代表版本号）。
