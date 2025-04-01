@@ -44,6 +44,7 @@ export default defineConfig({
       "/guide/introduce/": set_sidebar('/guide/introduce', false),
       "/guide/introduce/live/": set_sidebar('/guide/introduce/live'),
       "/guide/docs/": set_sidebar('/guide/docs'),
+      "/guide/introduce/Config/": set_sidebar('/guide/introduce/Config'),
     }
   },
   vite: { plugins: [] }

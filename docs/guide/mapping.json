@@ -5,7 +5,7 @@
     "config.md":  "配置内容",
     "doc.md":  "文档内容",
     "quickstart":  "快速开始",
-    "demo.md":  "Q&A",
+    "demo.md":  "Q\u0026A",
     "introduce.md":  "介绍",
     "get-start.md":  "入门",
     "参数详解":  "参数",
@@ -38,5 +38,7 @@
     "网易CC.md":  "网易CC",
     "虎牙.md":  "虎牙",
     "弹幕压制.md":  "弹幕压制",
-    "supportedLivePlatforms.md":  "平台支持"
+    "supportedLivePlatforms.md":  "平台支持",
+    "Config":  "配置项",
+    "GlobalConfig.md":  "全局配置"
 }
