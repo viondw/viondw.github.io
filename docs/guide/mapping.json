@@ -39,6 +39,8 @@
     "虎牙.md":  "虎牙",
     "弹幕压制.md":  "弹幕压制",
     "supportedLivePlatforms.md":  "平台支持",
-    "Config":  "配置项",
-    "GlobalConfig.md":  "全局配置"
+    "Config":  "空间配置",
+    "GlobalConfig.md":  "全局设置",
+		"liveconfig.md":  "各平台设置",
+    "developerOptions.md":  "开发者选项"
 }
