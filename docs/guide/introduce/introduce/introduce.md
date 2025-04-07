@@ -6,17 +6,8 @@
 
 ## 什么是 BiliuP?
 
-BiliuP 是一个活跃在 [GitHub](https://github.com/biliup) 的团队，专注于开发与 Bilibili 平台相关的工具。
+BiliuP 是一个活跃在 [GitHub](https://github.com/biliup) 的团队，专注于开发与 Bilibili 平台相关的工具。   
 
-### 核心项目
-
-我们目前主要维护以下项目：
-
-| 项目名称    | 功能定位                  | 技术特性与兼容性说明                                  |
-| :---------- | :------------------------ | :---------------------------------------------------- |
-| Biliup-rs   | 高性能 CLI 视频上传工具   | 基于 Rust 构建，提供跨语言 API (Python/Java/C++)，异步 IO |
-| Biliup-app  | 跨平台 GUI 投稿客户端     | 支持 Windows/macOS/Linux，可视化任务队列，高级编辑功能   |
-| biliup      | 自动化直播录制与上传工具  | 多平台录制，智能上传，多账号管理，元数据定制             |
 
 ---
 
@@ -97,7 +88,11 @@ BiliuP 是一个活跃在 [GitHub](https://github.com/biliup) 的团队，专注
       <span>Docker 安装教程</span>
     </a>
 
----
+---   
+
+## 尝试开始  
+
+* Bro安装好了吗？那开始试着尝试运行试试？[点我](../quickstart/get-start.html)
 
 ## 问题反馈
 
