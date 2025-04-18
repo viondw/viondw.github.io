@@ -71,6 +71,10 @@ BiliuP 是一个活跃在 [GitHub](https://github.com/biliup) 的团队，专注
 > [!TIP]
 > 若需上传至哔哩哔哩，上传速度主要取决于您的上行带宽。对于国内用户，使用境外服务器进行上传通常能获得更好的速度体验（请遵守相关法律法规）。
 
+> [!WARNING]
+> 上传日志*upload.log*中如果出现`INFO biliup: Retry attempt #1. Sleeping 2.9866470435513293 before the next attempt.`类似的信息。   
+> 请调整上传并发数，可以从`1`开始逐渐增加。       
+
 ### 安装指南
 
 请根据您的操作系统选择合适的安装教程：
