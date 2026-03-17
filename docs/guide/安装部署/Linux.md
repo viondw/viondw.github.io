@@ -1,9 +1,35 @@
 # Linux
 
 
-⚠ 请注意，该项目仅在debian10-12,ubuntu20.04-22.04进行测试，Centos等安装会产生意料之外的报错。
+⚠ 请注意，该项目仅在debian12-13,ubuntu22.04-24.04进行测试，Centos等安装会产生意料之外的报错。
+
+## 推荐使用UV安装
+- 1.首先，确保你的软件包列表是最新的：
+```
+sudo apt update && apt install curl -y
+```
+- 2.安装uv
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+- 3.使用uv安装biliup
+```
+uv tool install biliup
+```
+- 4.前台启动
+```
+biliup server --auth
+```
+- 5.访问webui
+```
+http://your-ip:19159
+```
 
 
+-----------------------------------
+
+
+## 使用pip安装(不推荐)
 
 - 1.首先，确保你的软件包列表是最新的：
 ```
@@ -17,7 +43,7 @@ sudo apt install python3-pip -y
 ```
 pip3 --version
 ```
-## pip安装
+- 3.安装biliup
 ```
 # 标准安装
 pip3 install biliup
@@ -43,11 +69,4 @@ pip3 install -U biliup -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 # 卸载工具
 pip3 uninstall biliup
-```
-## 一键脚本安装
-- 该脚本由[biliup社区](https://biliup.me)提供。
-- 确保已安装wget,curl`sudo apt install wget curl -y`
-
-```
-wget -O install.sh https://image.biliup.me/install.sh && chmod +x install.sh && bash install.sh
 ```
